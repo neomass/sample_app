@@ -4,7 +4,7 @@ describe User do
   
 
   before do
-    @user = User.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar")
+    @user = User.new(name: "Example User1", email: "user@example2.com", password: "foobar", password_confirmation: "foobar") 
   end
 
   subject { @user }
@@ -15,6 +15,17 @@ describe User do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should be_valid }
+  
+  describe "when email format is valid" do
+    it "should be valid" do
+      addresses = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
+      addresses.each do |valid_address|
+        @user.email = valid_address
+        expect(@user).to be_valid
+      end
+    end
+  end
+
 
   describe "when password is not present" do
   before { @user.password = @user.password_confirmation = " " }
